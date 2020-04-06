@@ -1,0 +1,13 @@
+C:\Publico\Seguimiento\Seguimiento\bin\Debug\Seguimiento.exe.config
+C:\Publico\Seguimiento\Seguimiento\bin\Debug\Seguimiento.exe
+C:\Publico\Seguimiento\Seguimiento\bin\Debug\Seguimiento.pdb
+C:\Publico\Seguimiento\Seguimiento\bin\Debug\Seguimiento.xml
+C:\Publico\Seguimiento\Seguimiento\obj\Debug\Seguimiento.vbprojAssemblyReference.cache
+C:\Publico\Seguimiento\Seguimiento\obj\Debug\Seguimiento.Form1.resources
+C:\Publico\Seguimiento\Seguimiento\obj\Debug\Seguimiento.Resources.resources
+C:\Publico\Seguimiento\Seguimiento\obj\Debug\Seguimiento.vbproj.GenerateResource.cache
+C:\Publico\Seguimiento\Seguimiento\obj\Debug\Seguimiento.exe
+C:\Publico\Seguimiento\Seguimiento\obj\Debug\Seguimiento.xml
+C:\Publico\Seguimiento\Seguimiento\obj\Debug\Seguimiento.pdb
+C:\Publico\Seguimiento\Seguimiento\obj\Debug\Seguimiento.FArchivos.resources
+C:\Publico\Seguimiento\Seguimiento\obj\Debug\Seguimiento.FParticipante.resources
