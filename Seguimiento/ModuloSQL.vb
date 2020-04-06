@@ -510,8 +510,14 @@
                     PolizaExistente = dr(0).ToString
                     IdEstadoPoliza = CInt(dr(1).ToString)
                     If IdEstadoPoliza <> 1 Then
-                        MsgBox("La poliza tiene TEMAS NO TERMINADOS" & Chr(10) & "¿Quiere consultarla?", MsgBoxStyle.Information + MsgBoxStyle.YesNo, "POLIZA CON TEMAS ABIERTOS")
+                        Respuesta = (MsgBox("La poliza tiene TEMAS NO TERMINADOS" & Chr(10) & "¿Quiere consultarla?", MsgBoxStyle.Information + MsgBoxStyle.YesNo, "POLIZA CON TEMAS ABIERTOS"))
                         dr.Close()
+                        If Respuesta = vbYes Then
+                            Dim PolizaTemporal As String = Form1.TxPoliza.Text
+                            Call Form1.TemaNuevo_Rutina()
+                            Form1.TxPoliza.Text = PolizaTemporal
+                            Call Temas_Buscar()
+                        End If
                         Exit Sub
                     End If
                 End While
@@ -539,8 +545,14 @@
                     CotizacionExistente = dr(0).ToString
                     IdEstadoCotizacion = dr(1).ToString
                     If IdEstadoCotizacion <> 1 Then
-                        MsgBox("La COTIZACION tiene TEMAS en NO TERMINADOS" & Chr(10) & "¿Quiere consultarla?", MsgBoxStyle.Information + MsgBoxStyle.YesNo, "COTIZACION CON TEMAS ABIERTOS")
+                        Respuesta = (MsgBox("La COTIZACION tiene TEMAS en NO TERMINADOS" & Chr(10) & "¿Quiere consultarla?", MsgBoxStyle.Information + MsgBoxStyle.YesNo, "COTIZACION CON TEMAS ABIERTOS"))
                         dr.Close()
+                        If Respuesta = vbYes Then
+                            Dim CotizacionTemporal As String = Form1.txCotizacion.Text
+                            Call Form1.TemaNuevo_Rutina()
+                            Form1.txCotizacion.Text = CotizacionTemporal
+                            Call Temas_Buscar()
+                        End If
                         Exit Sub
                     End If
                 End While
@@ -735,7 +747,10 @@
             ConsultaSQL += " LEFT JOIN Asegurado ON Temas.IdAsegurado = Asegurado.IdAsegurado)"
             ConsultaSQL += " LEFT JOIN Empleado ON Temas.IdEmpleado = Empleado.IdEmpleado)"
             ConsultaSQL += " LEFT JOIN Estado ON Temas.IdEstado = Estado.IdEstado"
-            ConsultaSQL += " WHERE IdTemas >0"
+            ConsultaSQL += " WHERE Temas.IdTemas >0 "
+
+
+
 
             If Titulo <> Nothing Then
                 ConsultaSQL += " and Temas.Titulo Like '%" & Titulo & "%'"
@@ -777,6 +792,7 @@
                 ConsultaSQL += " and Temas.Grupo like '%" & Form1.txGrupo.Text & "%'"
             End If
 
+            ConsultaSQL += " ORDER BY Temas.IdTemas desc"
 
             Form1.dgv_Resultado.Rows.Clear()
             Call Consultar()

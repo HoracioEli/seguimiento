@@ -329,15 +329,7 @@ Public Class Form1
     End Sub
 
     Private Sub btnTemaNuevo_Click(sender As Object, e As EventArgs) Handles btnTemaNuevo.Click
-        Call LimpiarControles()
-        GBotonesInstancia.Visible = False
-        GBotonesTema.Visible = True
-        btnAgregarTema.Enabled = True
-        btnEditarTema.Enabled = False
-
-        TxPoliza.Select()
-
-
+        Call TemaNuevo_Rutina()
     End Sub
 
     Private Sub BtnTemaAgregar_Click(sender As Object, e As EventArgs) Handles btnAgregarTema.Click
@@ -408,6 +400,9 @@ Public Class Form1
             MsgBox("No hay texto en el mensaje", MsgBoxStyle.Critical, "FALTA EL MENSAJE")
             Exit Sub
         End If
+        'esto por si hay cambios en tema
+        Call EditarTema_Rutina()
+
         Call Instancia_Editar()
 
         Call Archivos_Mover()
@@ -426,12 +421,7 @@ Public Class Form1
     End Sub
 
     Private Sub btnEditarTema_Click(sender As Object, e As EventArgs) Handles btnEditarTema.Click
-        Controlado = 0
-        Call Controlaringreso()
-        If Controlado = 0 Then ' HAY DATOS INCONSISTENTES
-            Exit Sub
-        End If
-        Call Tema_Editar()
+        Call EditarTema_Rutina()
     End Sub
 
     Private Sub AgregarToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles AgregarToolStripMenuItem.Click
@@ -469,5 +459,25 @@ Public Class Form1
         CboEstado.Text = NuevoEstado
         NuevoEstado = Nothing
 
+    End Sub
+
+
+    Sub EditarTema_Rutina()
+        Controlado = 0
+        Call Controlaringreso()
+        If Controlado = 0 Then ' HAY DATOS INCONSISTENTES
+            Exit Sub
+        End If
+        Call Tema_Editar()
+    End Sub
+
+    Sub TemaNuevo_Rutina()
+        Call LimpiarControles()
+        GBotonesInstancia.Visible = False
+        GBotonesTema.Visible = True
+        btnAgregarTema.Enabled = True
+        btnEditarTema.Enabled = False
+
+        TxPoliza.Select()
     End Sub
 End Class
