@@ -19,12 +19,13 @@
     Public Controlado As Byte
     Public PolizaExistente As String
     Public CotizacionExistente As String
+    Public SiniestroExistente As String
 
     Public IdEstadoCotizacion, IdEstadoPoliza As Integer
 
     Public Titulo As String
     Public Grupo As String
-    Public Poliza, Cotizacion As String
+    Public Poliza, Cotizacion, Siniestro As String
     Public Estado, NuevoEstado As String
 
     Public Asunto, TextoMensaje As String

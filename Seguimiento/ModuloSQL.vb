@@ -566,7 +566,40 @@
 
     End Sub
 
+    ' BUSCA SINIESTRO EXISTENTE
+    Sub Siniestro_Buscar_Existente()
+        Try
 
+            ConsultaSQL = "SELECT Siniestro, IdEstado"
+            ConsultaSQL += " FROM Temas"
+            ConsultaSQL += " where Siniestro = '" & Form1.txSiniestro.Text & "'"
+
+            Call Consultar()
+            If dr.HasRows Then
+                While dr.Read()
+                    SiniestroExistente = dr(0).ToString
+                    IdEstadoPoliza = CInt(dr(1).ToString)
+                    If IdEstadoPoliza <> 1 Then
+                        Respuesta = (MsgBox("El SINIESTRO tiene TEMAS NO TERMINADOS" & Chr(10) & "¿Quiere consultarlo?", MsgBoxStyle.Information + MsgBoxStyle.YesNo, "SINIESTRO CON TEMAS ABIERTOS"))
+                        dr.Close()
+                        If Respuesta = vbYes Then
+                            Dim SiniestroTemporal As String = Form1.txSiniestro.Text
+                            Call Form1.TemaNuevo_Rutina()
+                            Form1.txSiniestro.Text = SiniestroTemporal
+                            Call Temas_Buscar()
+                        End If
+                        Exit Sub
+                    End If
+                End While
+            End If
+
+            dr.Close()
+        Catch ex As Exception
+            dr.Close()
+            MsgBox(ex.Message)
+        End Try
+
+    End Sub
     Sub Estado_Listar()
 
         Try
@@ -692,7 +725,7 @@
         Grupo = Replace(Grupo, "'", " ")
 
 
-        SQL = "INSERT INTO Temas(Titulo,Poliza,Cotizacion,TareasPendientes,IdEstado,IdProductor,IdAsegurado,IdEmpleado,Grupo)"
+        SQL = "INSERT INTO Temas(Titulo,Poliza,Cotizacion,TareasPendientes,IdEstado,IdProductor,IdAsegurado,IdEmpleado,Grupo,Siniestro)"
         SQL = SQL & " Values ("
         SQL = SQL & "'" & Titulo & "',"
         SQL = SQL & "'" & Poliza & "',"
@@ -702,7 +735,8 @@
         SQL = SQL & IdProductor & ","
         SQL = SQL & IdAsegurado & ","
         SQL = SQL & IdEmpleado & ","
-        SQL = SQL & "'" & Grupo & "'"
+        SQL = SQL & "'" & Grupo & "',"
+        SQL = SQL & "'" & Siniestro & "'"
         SQL = SQL & ")"
 
         Call IngresarEnAcces()
@@ -739,21 +773,35 @@
 
             Form1.DGV_Instancias.Rows.Clear()
 
-            ConsultaSQL = "SELECT "
-            ConsultaSQL += " Temas.IdTemas, Temas.Titulo, Temas.Poliza, Temas.Cotizacion,"
-            ConsultaSQL += " Estado.Estado"
+            'ConsultaSQL = "SELECT "
+            'ConsultaSQL += " Temas.IdTemas, Temas.Titulo, Temas.Poliza, Temas.Cotizacion,"
+            'ConsultaSQL += " Estado.Estado, Temas.Siniestro"
+            'ConsultaSQL += " FROM"
+            'ConsultaSQL += " (((Productor RIGHT JOIN Temas ON Productor.idProductor = Temas.IdProductor)"
+            'ConsultaSQL += " LEFT JOIN Asegurado ON Temas.IdAsegurado = Asegurado.IdAsegurado)"
+            'ConsultaSQL += " LEFT JOIN Empleado ON Temas.IdEmpleado = Empleado.IdEmpleado)"
+            'ConsultaSQL += " LEFT JOIN Estado ON Temas.IdEstado = Estado.IdEstado"
+            'ConsultaSQL += " WHERE Temas.IdTemas >0 "
+
+            ConsultaSQL = "SELECT"
+            ConsultaSQL += " Temas.IdTemas, Temas.Titulo, Temas.Poliza, Temas.Cotizacion, Estado.Estado, Temas.Siniestro"
             ConsultaSQL += " FROM"
-            ConsultaSQL += " (((Productor RIGHT JOIN Temas ON Productor.idProductor = Temas.IdProductor)"
-            ConsultaSQL += " LEFT JOIN Asegurado ON Temas.IdAsegurado = Asegurado.IdAsegurado)"
-            ConsultaSQL += " LEFT JOIN Empleado ON Temas.IdEmpleado = Empleado.IdEmpleado)"
-            ConsultaSQL += " LEFT JOIN Estado ON Temas.IdEstado = Estado.IdEstado"
+            ConsultaSQL += " (Empleado "
+            ConsultaSQL += " RIGHT JOIN (Productor "
+            ConsultaSQL += " RIGHT JOIN (Estado "
+            ConsultaSQL += " RIGHT JOIN (Temas"
+            ConsultaSQL += " LEFT JOIN Instancias "
+            ConsultaSQL += " ON Temas.IdTemas = Instancias.IdTemas) "
+            ConsultaSQL += " ON Estado.IdEstado = Temas.IdEstado) "
+            ConsultaSQL += " ON Productor.idProductor = Temas.IdProductor)"
+            ConsultaSQL += " ON Empleado.IdEmpleado = Temas.IdEmpleado)"
+            ConsultaSQL += " LEFT JOIN Asegurado "
+            ConsultaSQL += " ON Temas.IdAsegurado = Asegurado.IdAsegurado"
             ConsultaSQL += " WHERE Temas.IdTemas >0 "
 
 
-
-
             If Titulo <> Nothing Then
-                ConsultaSQL += " and Temas.Titulo Like '%" & Titulo & "%'"
+                ConsultaSQL += " And Temas.Titulo Like '%" & Titulo & "%'"
             End If
 
             If Form1.TxPoliza.Text <> Nothing Then
@@ -762,6 +810,10 @@
 
             If Form1.txCotizacion.Text <> Nothing Then
                 ConsultaSQL += " and Temas.Cotizacion = '" & Form1.txCotizacion.Text & "'"
+            End If
+
+            If Form1.txSiniestro.Text <> Nothing Then
+                ConsultaSQL += " and Temas.Siniestro = '" & Form1.txSiniestro.Text & "'"
             End If
 
             If Form1.rtxTareasPendientes.Text <> Nothing Then
@@ -789,7 +841,11 @@
             End If
 
             If Form1.TxAsunto.Text <> Nothing Then
-                ConsultaSQL += " and Temas.Grupo like '%" & Form1.txGrupo.Text & "%'"
+                ConsultaSQL += " and Instancias.AsuntoEmail like '%" & Form1.TxAsunto.Text & "%'"
+            End If
+
+            If Form1.rtxMensaje.Text <> Nothing Then
+                ConsultaSQL += " and Instancias.Mensaje like '%" & Form1.rtxMensaje.Text & "%'"
             End If
 
             ConsultaSQL += " ORDER BY Temas.IdTemas desc"
@@ -800,15 +856,16 @@
 
             If dr.HasRows Then
                 While dr.Read()
-                    Dim IdTemaAnterior As String = Nothing
+                    Dim IdTemaAnterior As String = IdTema
 
                     IdTema = dr(0).ToString()
                     Titulo = dr(1).ToString()
                     Estado = dr(4).ToString()
                     Poliza = dr(2).ToString()
                     Cotizacion = dr(3).ToString()
+                    Siniestro = dr(5).ToString
                     If IdTema <> IdTemaAnterior Then
-                        Form1.dgv_Resultado.Rows.Add(IdTema, Titulo, Estado, Poliza, Cotizacion)
+                        Form1.dgv_Resultado.Rows.Add(IdTema, Titulo, Estado, Poliza, Cotizacion, Siniestro)
 
                     End If
                     IdTemaAnterior = IdTema
@@ -820,6 +877,7 @@
             Estado = Nothing
             Poliza = Nothing
             Cotizacion = Nothing
+            Siniestro = Nothing
 
             dr.Close()
         Catch ex As Exception
@@ -893,7 +951,8 @@
         SQL += "IdProductor=" & IdProductor & ","
         SQL += "IdAsegurado=" & IdAsegurado & ","
         SQL += "IdEmpleado=" & IdEmpleado & ","
-        SQL += "Grupo='" & Grupo & "'"
+        SQL += "Grupo='" & Grupo & "',"
+        SQL += "Siniestro='" & Siniestro & "'"
         SQL += " WHERE IdTemas=" & IdTema
 
         Call IngresarEnAcces()

@@ -110,6 +110,7 @@ Public Class Form1
         Controlado = 0
         Poliza = TxPoliza.Text
         Cotizacion = txCotizacion.Text
+        Siniestro = txSiniestro.Text
         If txProductor.Text <> Nothing Then
             Call Productor_Buscar()
             If Controlado = 0 Then
@@ -170,14 +171,26 @@ Public Class Form1
             End If
         End If
 
+        If txSiniestro.Text <> Nothing Then
+            If Len(txSiniestro.Text) <> 14 Then
+                MsgBox("Controlar Nro de SINIESTRO (tiene que tener 14 digitos)", MsgBoxStyle.Critical, "DATOS ERRONEOS")
+                txSiniestro.Select()
+                txSiniestro.SelectAll()
+                Exit Sub
+            End If
+        End If
+
         If IdEstado = 0 Then
             MsgBox("Falta indicar el ESTADO de este TEMA", MsgBoxStyle.Critical, "DATOS FALTANTES")
             CboEstado.Select()
             Exit Sub
         End If
 
-        Titulo = InputBox("Se puede agregar un pequeño resumen del tema", "AGREGAR TITULO DEL TEMA", TxAsunto.Text & Titulo)
-
+        If Titulo = Nothing Then
+            Titulo = InputBox("Se puede agregar un pequeño resumen del tema", "AGREGAR TITULO DEL TEMA", TxAsunto.Text)
+        Else
+            Titulo = InputBox("Se puede agregar un pequeño resumen del tema", "AGREGAR TITULO DEL TEMA", Titulo)
+        End If
 
 
         Controlado = 1
@@ -187,12 +200,14 @@ Public Class Form1
 
     Private Sub TxPoliza_Leave(sender As Object, e As EventArgs) Handles TxPoliza.Leave
         If TxPoliza.Text <> Nothing Then
+            TxPoliza.Text = Trim(TxPoliza.Text)
             Call Poliza_Buscar_Existente()
         End If
     End Sub
 
     Private Sub txCotizacion_Leave(sender As Object, e As EventArgs) Handles txCotizacion.Leave
         If txCotizacion.Text <> Nothing Then
+            txCotizacion.Text = Trim(txCotizacion.Text)
             Cotizacion_Buscar_Existente()
 
         End If
@@ -225,6 +240,7 @@ Public Class Form1
         Call Estado_Listar()
         TxPoliza.Text = Nothing
         txCotizacion.Text = Nothing
+        txSiniestro.Text = Nothing
         Poliza = Nothing
         Cotizacion = Nothing
         Empleado = Nothing
@@ -239,6 +255,8 @@ Public Class Form1
         IdInstancia = 0
         TxAsunto.Text = Nothing
         rtxMensaje.Text = Nothing
+        btnAgregarInstancia.Enabled = True
+        btnInstanciaEditar.Enabled = False
         TxAsunto.Select()
     End Sub
 
@@ -246,7 +264,7 @@ Public Class Form1
         IdTema = 0
         IdInstancia = 0
 
-        Titulo = InputBox("Tiene la posibilidad de agregar el TITULO a buscar o bien dejarlo en blanco", "AGREGAR TITULO", TxAsunto.Text)
+        Titulo = InputBox("Tiene la posibilidad de agregar el TITULO a buscar o bien dejarlo en blanco", "AGREGAR TITULO")
         Call Temas_Buscar()
     End Sub
 
@@ -256,7 +274,7 @@ Public Class Form1
         GBotonesInstancia.Visible = True
         btnAgregarTema.Enabled = False
         btnEditarTema.Enabled = True
-        btnInstanciaEditar.Enabled = False
+
 
         Call Instancias_Buscar()
     End Sub
@@ -267,6 +285,8 @@ Public Class Form1
             Call Instancias_Busqueda_ID()
             Call Temas_Busqueda_ID()
             rtxMensaje.LoadFile(RutaMensajes & CStr(IdInstancia) & ".rtf")
+            btnInstanciaEditar.Enabled = True
+            btnAgregarInstancia.Enabled = False
             btnInstanciaEditar.Enabled = True
         Catch ex As Exception
             MsgBox(ex.Message)
@@ -359,7 +379,14 @@ Public Class Form1
             Exit Sub
 
         End If
+        If IdInstancia > 0 Then
+            MsgBox("Lamentablemente faltó indicar 'Nueva instancia'. Debe hacerlo pero se perderá el texto del asunto y del mensaje", MsgBoxStyle.Critical, "INSTANCIA EXISTENTE")
+            Exit Sub
 
+        End If
+
+        'esto es por si cambio algo 
+        Call EditarTema_Rutina()
         Call Instancia_Rutina()
 
     End Sub
@@ -479,5 +506,12 @@ Public Class Form1
         btnEditarTema.Enabled = False
 
         TxPoliza.Select()
+    End Sub
+
+    Private Sub txSiniestro_Leave(sender As Object, e As EventArgs) Handles txSiniestro.Leave
+        If txSiniestro.Text <> Nothing Then
+            txSiniestro.Text = Trim(txSiniestro.Text)
+            Call Siniestro_Buscar_Existente()
+        End If
     End Sub
 End Class

@@ -43,12 +43,17 @@ Partial Class Form1
         Me.Label1 = New System.Windows.Forms.Label()
         Me.txProductor = New System.Windows.Forms.TextBox()
         Me.GComprobante = New System.Windows.Forms.GroupBox()
+        Me.Label8 = New System.Windows.Forms.Label()
+        Me.txSiniestro = New System.Windows.Forms.TextBox()
         Me.Label5 = New System.Windows.Forms.Label()
         Me.txCotizacion = New System.Windows.Forms.TextBox()
         Me.Label6 = New System.Windows.Forms.Label()
         Me.TxPoliza = New System.Windows.Forms.TextBox()
         Me.GEstado = New System.Windows.Forms.GroupBox()
         Me.CboEstado = New System.Windows.Forms.ComboBox()
+        Me.MenuEstado = New System.Windows.Forms.ContextMenuStrip(Me.components)
+        Me.AgregarToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
+        Me.EditarToolStripMenuItem1 = New System.Windows.Forms.ToolStripMenuItem()
         Me.GEmail = New System.Windows.Forms.GroupBox()
         Me.Label7 = New System.Windows.Forms.Label()
         Me.TxAsunto = New System.Windows.Forms.TextBox()
@@ -64,29 +69,28 @@ Partial Class Form1
         Me.OpenFileDialog1 = New System.Windows.Forms.OpenFileDialog()
         Me.GTemas = New System.Windows.Forms.GroupBox()
         Me.dgv_Resultado = New System.Windows.Forms.DataGridView()
+        Me.FolderBrowserDialog1 = New System.Windows.Forms.FolderBrowserDialog()
+        Me.GBotonesTema = New System.Windows.Forms.GroupBox()
+        Me.btnTemaNuevo = New System.Windows.Forms.Button()
+        Me.btnEditarTema = New System.Windows.Forms.Button()
+        Me.btnAgregarTema = New System.Windows.Forms.Button()
+        Me.btnBuscarTema = New System.Windows.Forms.Button()
+        Me.GBotonesInstancia = New System.Windows.Forms.GroupBox()
+        Me.btnAgregarInstancia = New System.Windows.Forms.Button()
+        Me.btnInstanciaEditar = New System.Windows.Forms.Button()
+        Me.btnNuevaInstancia = New System.Windows.Forms.Button()
+        Me.btnCarpetaBuscar = New System.Windows.Forms.Button()
         Me.Column1 = New System.Windows.Forms.DataGridViewTextBoxColumn()
         Me.C_Titulo = New System.Windows.Forms.DataGridViewTextBoxColumn()
         Me.C_Estado = New System.Windows.Forms.DataGridViewTextBoxColumn()
         Me.C_Poliza = New System.Windows.Forms.DataGridViewTextBoxColumn()
         Me.C_Cotizacion = New System.Windows.Forms.DataGridViewTextBoxColumn()
-        Me.FolderBrowserDialog1 = New System.Windows.Forms.FolderBrowserDialog()
-        Me.GBotonesTema = New System.Windows.Forms.GroupBox()
-        Me.btnEditarTema = New System.Windows.Forms.Button()
-        Me.btnAgregarTema = New System.Windows.Forms.Button()
-        Me.btnBuscarTema = New System.Windows.Forms.Button()
-        Me.GBotonesInstancia = New System.Windows.Forms.GroupBox()
-        Me.btnTemaNuevo = New System.Windows.Forms.Button()
-        Me.btnAgregarInstancia = New System.Windows.Forms.Button()
-        Me.btnInstanciaEditar = New System.Windows.Forms.Button()
-        Me.btnNuevaInstancia = New System.Windows.Forms.Button()
-        Me.btnCarpetaBuscar = New System.Windows.Forms.Button()
-        Me.MenuEstado = New System.Windows.Forms.ContextMenuStrip(Me.components)
-        Me.AgregarToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
-        Me.EditarToolStripMenuItem1 = New System.Windows.Forms.ToolStripMenuItem()
+        Me.C_Siniestro = New System.Windows.Forms.DataGridViewTextBoxColumn()
         Me.GpoParticipantes.SuspendLayout()
         Me.MenuDatosParticipantes.SuspendLayout()
         Me.GComprobante.SuspendLayout()
         Me.GEstado.SuspendLayout()
+        Me.MenuEstado.SuspendLayout()
         Me.GEmail.SuspendLayout()
         Me.GMensaje.SuspendLayout()
         Me.GTareasPendientes.SuspendLayout()
@@ -96,7 +100,6 @@ Partial Class Form1
         CType(Me.dgv_Resultado, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.GBotonesTema.SuspendLayout()
         Me.GBotonesInstancia.SuspendLayout()
-        Me.MenuEstado.SuspendLayout()
         Me.SuspendLayout()
         '
         'GpoParticipantes
@@ -257,6 +260,8 @@ Partial Class Form1
         'GComprobante
         '
         Me.GComprobante.BackColor = System.Drawing.Color.AntiqueWhite
+        Me.GComprobante.Controls.Add(Me.Label8)
+        Me.GComprobante.Controls.Add(Me.txSiniestro)
         Me.GComprobante.Controls.Add(Me.Label5)
         Me.GComprobante.Controls.Add(Me.txCotizacion)
         Me.GComprobante.Controls.Add(Me.Label6)
@@ -266,12 +271,28 @@ Partial Class Form1
         Me.GComprobante.Size = New System.Drawing.Size(262, 121)
         Me.GComprobante.TabIndex = 0
         Me.GComprobante.TabStop = False
-        Me.GComprobante.Text = "Comprobante"
+        '
+        'Label8
+        '
+        Me.Label8.AutoSize = True
+        Me.Label8.Location = New System.Drawing.Point(7, 91)
+        Me.Label8.Name = "Label8"
+        Me.Label8.Size = New System.Drawing.Size(47, 13)
+        Me.Label8.TabIndex = 5
+        Me.Label8.Text = "Siniestro"
+        '
+        'txSiniestro
+        '
+        Me.txSiniestro.Font = New System.Drawing.Font("Arial", 8.25!, System.Drawing.FontStyle.Italic)
+        Me.txSiniestro.Location = New System.Drawing.Point(80, 91)
+        Me.txSiniestro.Name = "txSiniestro"
+        Me.txSiniestro.Size = New System.Drawing.Size(138, 20)
+        Me.txSiniestro.TabIndex = 2
         '
         'Label5
         '
         Me.Label5.AutoSize = True
-        Me.Label5.Location = New System.Drawing.Point(6, 71)
+        Me.Label5.Location = New System.Drawing.Point(6, 58)
         Me.Label5.Name = "Label5"
         Me.Label5.Size = New System.Drawing.Size(56, 13)
         Me.Label5.TabIndex = 3
@@ -280,7 +301,7 @@ Partial Class Form1
         'txCotizacion
         '
         Me.txCotizacion.Font = New System.Drawing.Font("Arial", 8.25!, System.Drawing.FontStyle.Italic)
-        Me.txCotizacion.Location = New System.Drawing.Point(80, 71)
+        Me.txCotizacion.Location = New System.Drawing.Point(80, 58)
         Me.txCotizacion.Name = "txCotizacion"
         Me.txCotizacion.Size = New System.Drawing.Size(138, 20)
         Me.txCotizacion.TabIndex = 1
@@ -288,7 +309,7 @@ Partial Class Form1
         'Label6
         '
         Me.Label6.AutoSize = True
-        Me.Label6.Location = New System.Drawing.Point(6, 33)
+        Me.Label6.Location = New System.Drawing.Point(6, 23)
         Me.Label6.Name = "Label6"
         Me.Label6.Size = New System.Drawing.Size(35, 13)
         Me.Label6.TabIndex = 1
@@ -297,7 +318,7 @@ Partial Class Form1
         'TxPoliza
         '
         Me.TxPoliza.Font = New System.Drawing.Font("Arial", 8.25!, System.Drawing.FontStyle.Italic)
-        Me.TxPoliza.Location = New System.Drawing.Point(80, 33)
+        Me.TxPoliza.Location = New System.Drawing.Point(80, 23)
         Me.TxPoliza.Name = "TxPoliza"
         Me.TxPoliza.Size = New System.Drawing.Size(138, 20)
         Me.TxPoliza.TabIndex = 0
@@ -325,6 +346,24 @@ Partial Class Form1
         Me.CboEstado.Size = New System.Drawing.Size(164, 21)
         Me.CboEstado.Sorted = True
         Me.CboEstado.TabIndex = 0
+        '
+        'MenuEstado
+        '
+        Me.MenuEstado.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.AgregarToolStripMenuItem, Me.EditarToolStripMenuItem1})
+        Me.MenuEstado.Name = "MenuEstado"
+        Me.MenuEstado.Size = New System.Drawing.Size(117, 48)
+        '
+        'AgregarToolStripMenuItem
+        '
+        Me.AgregarToolStripMenuItem.Name = "AgregarToolStripMenuItem"
+        Me.AgregarToolStripMenuItem.Size = New System.Drawing.Size(116, 22)
+        Me.AgregarToolStripMenuItem.Text = "Agregar"
+        '
+        'EditarToolStripMenuItem1
+        '
+        Me.EditarToolStripMenuItem1.Name = "EditarToolStripMenuItem1"
+        Me.EditarToolStripMenuItem1.Size = New System.Drawing.Size(116, 22)
+        Me.EditarToolStripMenuItem1.Text = "Editar"
         '
         'GEmail
         '
@@ -465,12 +504,111 @@ Partial Class Form1
         '
         Me.dgv_Resultado.BackgroundColor = System.Drawing.Color.White
         Me.dgv_Resultado.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize
-        Me.dgv_Resultado.Columns.AddRange(New System.Windows.Forms.DataGridViewColumn() {Me.Column1, Me.C_Titulo, Me.C_Estado, Me.C_Poliza, Me.C_Cotizacion})
+        Me.dgv_Resultado.Columns.AddRange(New System.Windows.Forms.DataGridViewColumn() {Me.Column1, Me.C_Titulo, Me.C_Estado, Me.C_Poliza, Me.C_Cotizacion, Me.C_Siniestro})
         Me.dgv_Resultado.GridColor = System.Drawing.Color.WhiteSmoke
         Me.dgv_Resultado.Location = New System.Drawing.Point(9, 19)
         Me.dgv_Resultado.Name = "dgv_Resultado"
         Me.dgv_Resultado.Size = New System.Drawing.Size(687, 191)
         Me.dgv_Resultado.TabIndex = 0
+        '
+        'GBotonesTema
+        '
+        Me.GBotonesTema.Controls.Add(Me.btnTemaNuevo)
+        Me.GBotonesTema.Controls.Add(Me.btnEditarTema)
+        Me.GBotonesTema.Controls.Add(Me.btnAgregarTema)
+        Me.GBotonesTema.Controls.Add(Me.btnBuscarTema)
+        Me.GBotonesTema.Location = New System.Drawing.Point(996, 317)
+        Me.GBotonesTema.Name = "GBotonesTema"
+        Me.GBotonesTema.Size = New System.Drawing.Size(176, 168)
+        Me.GBotonesTema.TabIndex = 6
+        Me.GBotonesTema.TabStop = False
+        Me.GBotonesTema.Text = "Temas"
+        '
+        'btnTemaNuevo
+        '
+        Me.btnTemaNuevo.Image = Global.Seguimiento.My.Resources.Resources.NuevoTema
+        Me.btnTemaNuevo.Location = New System.Drawing.Point(94, 92)
+        Me.btnTemaNuevo.Name = "btnTemaNuevo"
+        Me.btnTemaNuevo.Size = New System.Drawing.Size(70, 59)
+        Me.btnTemaNuevo.TabIndex = 3
+        Me.btnTemaNuevo.UseVisualStyleBackColor = True
+        '
+        'btnEditarTema
+        '
+        Me.btnEditarTema.Image = Global.Seguimiento.My.Resources.Resources.edit
+        Me.btnEditarTema.Location = New System.Drawing.Point(94, 19)
+        Me.btnEditarTema.Name = "btnEditarTema"
+        Me.btnEditarTema.Size = New System.Drawing.Size(76, 64)
+        Me.btnEditarTema.TabIndex = 1
+        Me.btnEditarTema.UseVisualStyleBackColor = True
+        '
+        'btnAgregarTema
+        '
+        Me.btnAgregarTema.Image = Global.Seguimiento.My.Resources.Resources.plus
+        Me.btnAgregarTema.Location = New System.Drawing.Point(6, 19)
+        Me.btnAgregarTema.Name = "btnAgregarTema"
+        Me.btnAgregarTema.Size = New System.Drawing.Size(76, 64)
+        Me.btnAgregarTema.TabIndex = 0
+        Me.btnAgregarTema.UseVisualStyleBackColor = True
+        '
+        'btnBuscarTema
+        '
+        Me.btnBuscarTema.Image = Global.Seguimiento.My.Resources.Resources.search
+        Me.btnBuscarTema.Location = New System.Drawing.Point(6, 92)
+        Me.btnBuscarTema.Name = "btnBuscarTema"
+        Me.btnBuscarTema.Size = New System.Drawing.Size(76, 59)
+        Me.btnBuscarTema.TabIndex = 2
+        Me.btnBuscarTema.UseVisualStyleBackColor = True
+        '
+        'GBotonesInstancia
+        '
+        Me.GBotonesInstancia.Controls.Add(Me.btnAgregarInstancia)
+        Me.GBotonesInstancia.Controls.Add(Me.btnInstanciaEditar)
+        Me.GBotonesInstancia.Controls.Add(Me.btnNuevaInstancia)
+        Me.GBotonesInstancia.Controls.Add(Me.btnCarpetaBuscar)
+        Me.GBotonesInstancia.Location = New System.Drawing.Point(996, 528)
+        Me.GBotonesInstancia.Name = "GBotonesInstancia"
+        Me.GBotonesInstancia.Size = New System.Drawing.Size(176, 157)
+        Me.GBotonesInstancia.TabIndex = 7
+        Me.GBotonesInstancia.TabStop = False
+        Me.GBotonesInstancia.Text = "Instancias"
+        Me.GBotonesInstancia.Visible = False
+        '
+        'btnAgregarInstancia
+        '
+        Me.btnAgregarInstancia.Image = Global.Seguimiento.My.Resources.Resources.plus
+        Me.btnAgregarInstancia.Location = New System.Drawing.Point(6, 16)
+        Me.btnAgregarInstancia.Name = "btnAgregarInstancia"
+        Me.btnAgregarInstancia.Size = New System.Drawing.Size(76, 59)
+        Me.btnAgregarInstancia.TabIndex = 0
+        Me.btnAgregarInstancia.UseVisualStyleBackColor = True
+        '
+        'btnInstanciaEditar
+        '
+        Me.btnInstanciaEditar.Image = Global.Seguimiento.My.Resources.Resources.edit
+        Me.btnInstanciaEditar.Location = New System.Drawing.Point(88, 16)
+        Me.btnInstanciaEditar.Name = "btnInstanciaEditar"
+        Me.btnInstanciaEditar.Size = New System.Drawing.Size(76, 59)
+        Me.btnInstanciaEditar.TabIndex = 1
+        Me.btnInstanciaEditar.UseVisualStyleBackColor = True
+        '
+        'btnNuevaInstancia
+        '
+        Me.btnNuevaInstancia.Image = Global.Seguimiento.My.Resources.Resources.nuevo
+        Me.btnNuevaInstancia.Location = New System.Drawing.Point(94, 81)
+        Me.btnNuevaInstancia.Name = "btnNuevaInstancia"
+        Me.btnNuevaInstancia.Size = New System.Drawing.Size(70, 58)
+        Me.btnNuevaInstancia.TabIndex = 3
+        Me.btnNuevaInstancia.UseVisualStyleBackColor = True
+        '
+        'btnCarpetaBuscar
+        '
+        Me.btnCarpetaBuscar.Image = Global.Seguimiento.My.Resources.Resources.Buscar_Carpeta
+        Me.btnCarpetaBuscar.Location = New System.Drawing.Point(6, 81)
+        Me.btnCarpetaBuscar.Name = "btnCarpetaBuscar"
+        Me.btnCarpetaBuscar.Size = New System.Drawing.Size(76, 58)
+        Me.btnCarpetaBuscar.TabIndex = 2
+        Me.btnCarpetaBuscar.UseVisualStyleBackColor = True
         '
         'Column1
         '
@@ -482,7 +620,7 @@ Partial Class Form1
         '
         Me.C_Titulo.HeaderText = "Titulo"
         Me.C_Titulo.Name = "C_Titulo"
-        Me.C_Titulo.Width = 300
+        Me.C_Titulo.Width = 250
         '
         'C_Estado
         '
@@ -499,122 +637,10 @@ Partial Class Form1
         Me.C_Cotizacion.HeaderText = "Cotizacion"
         Me.C_Cotizacion.Name = "C_Cotizacion"
         '
-        'GBotonesTema
+        'C_Siniestro
         '
-        Me.GBotonesTema.Controls.Add(Me.btnTemaNuevo)
-        Me.GBotonesTema.Controls.Add(Me.btnEditarTema)
-        Me.GBotonesTema.Controls.Add(Me.btnAgregarTema)
-        Me.GBotonesTema.Controls.Add(Me.btnBuscarTema)
-        Me.GBotonesTema.Location = New System.Drawing.Point(996, 317)
-        Me.GBotonesTema.Name = "GBotonesTema"
-        Me.GBotonesTema.Size = New System.Drawing.Size(176, 168)
-        Me.GBotonesTema.TabIndex = 16
-        Me.GBotonesTema.TabStop = False
-        Me.GBotonesTema.Text = "Temas"
-        '
-        'btnEditarTema
-        '
-        Me.btnEditarTema.Image = Global.Seguimiento.My.Resources.Resources.edit
-        Me.btnEditarTema.Location = New System.Drawing.Point(94, 19)
-        Me.btnEditarTema.Name = "btnEditarTema"
-        Me.btnEditarTema.Size = New System.Drawing.Size(76, 64)
-        Me.btnEditarTema.TabIndex = 10
-        Me.btnEditarTema.UseVisualStyleBackColor = True
-        '
-        'btnAgregarTema
-        '
-        Me.btnAgregarTema.Image = Global.Seguimiento.My.Resources.Resources.plus
-        Me.btnAgregarTema.Location = New System.Drawing.Point(6, 19)
-        Me.btnAgregarTema.Name = "btnAgregarTema"
-        Me.btnAgregarTema.Size = New System.Drawing.Size(76, 64)
-        Me.btnAgregarTema.TabIndex = 7
-        Me.btnAgregarTema.UseVisualStyleBackColor = True
-        '
-        'btnBuscarTema
-        '
-        Me.btnBuscarTema.Image = Global.Seguimiento.My.Resources.Resources.search
-        Me.btnBuscarTema.Location = New System.Drawing.Point(6, 92)
-        Me.btnBuscarTema.Name = "btnBuscarTema"
-        Me.btnBuscarTema.Size = New System.Drawing.Size(76, 59)
-        Me.btnBuscarTema.TabIndex = 8
-        Me.btnBuscarTema.UseVisualStyleBackColor = True
-        '
-        'GBotonesInstancia
-        '
-        Me.GBotonesInstancia.Controls.Add(Me.btnAgregarInstancia)
-        Me.GBotonesInstancia.Controls.Add(Me.btnInstanciaEditar)
-        Me.GBotonesInstancia.Controls.Add(Me.btnNuevaInstancia)
-        Me.GBotonesInstancia.Controls.Add(Me.btnCarpetaBuscar)
-        Me.GBotonesInstancia.Location = New System.Drawing.Point(996, 528)
-        Me.GBotonesInstancia.Name = "GBotonesInstancia"
-        Me.GBotonesInstancia.Size = New System.Drawing.Size(176, 157)
-        Me.GBotonesInstancia.TabIndex = 17
-        Me.GBotonesInstancia.TabStop = False
-        Me.GBotonesInstancia.Text = "Instancias"
-        Me.GBotonesInstancia.Visible = False
-        '
-        'btnTemaNuevo
-        '
-        Me.btnTemaNuevo.Image = Global.Seguimiento.My.Resources.Resources.NuevoTema
-        Me.btnTemaNuevo.Location = New System.Drawing.Point(94, 92)
-        Me.btnTemaNuevo.Name = "btnTemaNuevo"
-        Me.btnTemaNuevo.Size = New System.Drawing.Size(70, 59)
-        Me.btnTemaNuevo.TabIndex = 13
-        Me.btnTemaNuevo.UseVisualStyleBackColor = True
-        '
-        'btnAgregarInstancia
-        '
-        Me.btnAgregarInstancia.Image = Global.Seguimiento.My.Resources.Resources.plus
-        Me.btnAgregarInstancia.Location = New System.Drawing.Point(6, 16)
-        Me.btnAgregarInstancia.Name = "btnAgregarInstancia"
-        Me.btnAgregarInstancia.Size = New System.Drawing.Size(76, 59)
-        Me.btnAgregarInstancia.TabIndex = 6
-        Me.btnAgregarInstancia.UseVisualStyleBackColor = True
-        '
-        'btnInstanciaEditar
-        '
-        Me.btnInstanciaEditar.Image = Global.Seguimiento.My.Resources.Resources.edit
-        Me.btnInstanciaEditar.Location = New System.Drawing.Point(88, 16)
-        Me.btnInstanciaEditar.Name = "btnInstanciaEditar"
-        Me.btnInstanciaEditar.Size = New System.Drawing.Size(76, 59)
-        Me.btnInstanciaEditar.TabIndex = 9
-        Me.btnInstanciaEditar.UseVisualStyleBackColor = True
-        '
-        'btnNuevaInstancia
-        '
-        Me.btnNuevaInstancia.Image = Global.Seguimiento.My.Resources.Resources.nuevo
-        Me.btnNuevaInstancia.Location = New System.Drawing.Point(94, 81)
-        Me.btnNuevaInstancia.Name = "btnNuevaInstancia"
-        Me.btnNuevaInstancia.Size = New System.Drawing.Size(70, 58)
-        Me.btnNuevaInstancia.TabIndex = 12
-        Me.btnNuevaInstancia.UseVisualStyleBackColor = True
-        '
-        'btnCarpetaBuscar
-        '
-        Me.btnCarpetaBuscar.Image = Global.Seguimiento.My.Resources.Resources.Buscar_Carpeta
-        Me.btnCarpetaBuscar.Location = New System.Drawing.Point(6, 81)
-        Me.btnCarpetaBuscar.Name = "btnCarpetaBuscar"
-        Me.btnCarpetaBuscar.Size = New System.Drawing.Size(76, 58)
-        Me.btnCarpetaBuscar.TabIndex = 10
-        Me.btnCarpetaBuscar.UseVisualStyleBackColor = True
-        '
-        'MenuEstado
-        '
-        Me.MenuEstado.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.AgregarToolStripMenuItem, Me.EditarToolStripMenuItem1})
-        Me.MenuEstado.Name = "MenuEstado"
-        Me.MenuEstado.Size = New System.Drawing.Size(117, 48)
-        '
-        'AgregarToolStripMenuItem
-        '
-        Me.AgregarToolStripMenuItem.Name = "AgregarToolStripMenuItem"
-        Me.AgregarToolStripMenuItem.Size = New System.Drawing.Size(180, 22)
-        Me.AgregarToolStripMenuItem.Text = "Agregar"
-        '
-        'EditarToolStripMenuItem1
-        '
-        Me.EditarToolStripMenuItem1.Name = "EditarToolStripMenuItem1"
-        Me.EditarToolStripMenuItem1.Size = New System.Drawing.Size(180, 22)
-        Me.EditarToolStripMenuItem1.Text = "Editar"
+        Me.C_Siniestro.HeaderText = "Siniestro"
+        Me.C_Siniestro.Name = "C_Siniestro"
         '
         'Form1
         '
@@ -641,6 +667,7 @@ Partial Class Form1
         Me.GComprobante.ResumeLayout(False)
         Me.GComprobante.PerformLayout()
         Me.GEstado.ResumeLayout(False)
+        Me.MenuEstado.ResumeLayout(False)
         Me.GEmail.ResumeLayout(False)
         Me.GEmail.PerformLayout()
         Me.GMensaje.ResumeLayout(False)
@@ -651,7 +678,6 @@ Partial Class Form1
         CType(Me.dgv_Resultado, System.ComponentModel.ISupportInitialize).EndInit()
         Me.GBotonesTema.ResumeLayout(False)
         Me.GBotonesInstancia.ResumeLayout(False)
-        Me.MenuEstado.ResumeLayout(False)
         Me.ResumeLayout(False)
 
     End Sub
@@ -691,11 +717,6 @@ Partial Class Form1
     Friend WithEvents txGrupo As TextBox
     Friend WithEvents Label4 As Label
     Friend WithEvents FolderBrowserDialog1 As FolderBrowserDialog
-    Friend WithEvents Column1 As DataGridViewTextBoxColumn
-    Friend WithEvents C_Titulo As DataGridViewTextBoxColumn
-    Friend WithEvents C_Estado As DataGridViewTextBoxColumn
-    Friend WithEvents C_Poliza As DataGridViewTextBoxColumn
-    Friend WithEvents C_Cotizacion As DataGridViewTextBoxColumn
     Friend WithEvents C_IdInstancia As DataGridViewTextBoxColumn
     Friend WithEvents C_Fecha As DataGridViewTextBoxColumn
     Friend WithEvents MenuDatosParticipantes As ContextMenuStrip
@@ -716,4 +737,12 @@ Partial Class Form1
     Friend WithEvents MenuEstado As ContextMenuStrip
     Friend WithEvents AgregarToolStripMenuItem As ToolStripMenuItem
     Friend WithEvents EditarToolStripMenuItem1 As ToolStripMenuItem
+    Friend WithEvents Label8 As Label
+    Friend WithEvents txSiniestro As TextBox
+    Friend WithEvents Column1 As DataGridViewTextBoxColumn
+    Friend WithEvents C_Titulo As DataGridViewTextBoxColumn
+    Friend WithEvents C_Estado As DataGridViewTextBoxColumn
+    Friend WithEvents C_Poliza As DataGridViewTextBoxColumn
+    Friend WithEvents C_Cotizacion As DataGridViewTextBoxColumn
+    Friend WithEvents C_Siniestro As DataGridViewTextBoxColumn
 End Class
