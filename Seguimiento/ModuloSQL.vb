@@ -67,7 +67,7 @@
             ConsultaSQL = "SELECT Productor, IdProductor,Datos"
             ConsultaSQL += " FROM Productor"
             ConsultaSQL += " where Productor like '%" & Form1.txProductor.Text & "%'"
-
+            ConsultaSQL += " order by Productor"
             Form1.List_Resultado.Items.Clear()
 
 
@@ -214,7 +214,7 @@
             ConsultaSQL = "SELECT Asegurado, idAsegurado, Datos"
             ConsultaSQL += " FROM Asegurado"
             ConsultaSQL += " where Asegurado like '%" & Form1.txAsegurado.Text & "%'"
-
+            ConsultaSQL += " order by Asegurado"
             Form1.List_Resultado.Items.Clear()
 
 
@@ -361,7 +361,7 @@
             ConsultaSQL = "SELECT Empleado, IdEmpleado,Datos"
             ConsultaSQL += " FROM Empleado"
             ConsultaSQL += " where Empleado like '%" & Form1.txEmpleado.Text & "%'"
-
+            ConsultaSQL += " order by empleado"
             Form1.List_Resultado.Items.Clear()
 
 
@@ -773,15 +773,6 @@
 
             Form1.DGV_Instancias.Rows.Clear()
 
-            'ConsultaSQL = "SELECT "
-            'ConsultaSQL += " Temas.IdTemas, Temas.Titulo, Temas.Poliza, Temas.Cotizacion,"
-            'ConsultaSQL += " Estado.Estado, Temas.Siniestro"
-            'ConsultaSQL += " FROM"
-            'ConsultaSQL += " (((Productor RIGHT JOIN Temas ON Productor.idProductor = Temas.IdProductor)"
-            'ConsultaSQL += " LEFT JOIN Asegurado ON Temas.IdAsegurado = Asegurado.IdAsegurado)"
-            'ConsultaSQL += " LEFT JOIN Empleado ON Temas.IdEmpleado = Empleado.IdEmpleado)"
-            'ConsultaSQL += " LEFT JOIN Estado ON Temas.IdEstado = Estado.IdEstado"
-            'ConsultaSQL += " WHERE Temas.IdTemas >0 "
 
             ConsultaSQL = "SELECT"
             ConsultaSQL += " Temas.IdTemas, Temas.Titulo, Temas.Poliza, Temas.Cotizacion, Estado.Estado, Temas.Siniestro"
@@ -870,6 +861,8 @@
                     End If
                     IdTemaAnterior = IdTema
                 End While
+            Else
+                MsgBox("No existen registros para la combinación buscada", MsgBoxStyle.Critical, "SIN REGISTROS")
             End If
 
             IdTema = 0
@@ -893,7 +886,7 @@
             End If
 
             ConsultaSQL = "SELECT "
-            ConsultaSQL += " Titulo,Poliza, Cotizacion, TareasPendientes, Grupo, Empleado, Estado, Productor, Asegurado "
+            ConsultaSQL += " Titulo,Poliza, Cotizacion, TareasPendientes, Grupo, Empleado, Estado, Productor, Asegurado,Siniestro "
             ConsultaSQL += " FROM "
             ConsultaSQL += " (Empleado RIGHT JOIN (Productor RIGHT JOIN (Estado LEFT JOIN Temas   "
             ConsultaSQL += " ON Estado.IdEstado = Temas.IdEstado) "
@@ -914,6 +907,7 @@
                 Estado = dr(6).ToString
                 Productor = dr(7).ToString
                 Asegurado = dr(8).ToString
+                Siniestro = dr(9).ToString
 
 
                 Form1.TxPoliza.Text = Poliza
@@ -923,6 +917,7 @@
                 Form1.CboEstado.Text = Estado
                 Form1.txProductor.Text = Productor
                 Form1.txAsegurado.Text = Asegurado
+                Form1.txSiniestro.Text = Siniestro
 
 
             End If
@@ -1041,6 +1036,11 @@
         If Respuesta = vbNo Then
             Call Form1.LimpiarControles()
             Form1.GBotonesInstancia.Visible = False
+            Form1.btnAgregarTema.Enabled = True
+            Form1.btnEditarTema.Enabled = False
+            Call Temas_Buscar()
+
+
         Else
             IdInstancia = 0
             Form1.GBotonesInstancia.Visible = True
