@@ -58,6 +58,8 @@ Partial Class Form1
         Me.Label7 = New System.Windows.Forms.Label()
         Me.TxAsunto = New System.Windows.Forms.TextBox()
         Me.GMensaje = New System.Windows.Forms.GroupBox()
+        Me.btnYo = New System.Windows.Forms.Button()
+        Me.btnUsuario = New System.Windows.Forms.Button()
         Me.List_Resultado = New System.Windows.Forms.ListBox()
         Me.rtxMensaje = New System.Windows.Forms.RichTextBox()
         Me.GTareasPendientes = New System.Windows.Forms.GroupBox()
@@ -69,6 +71,12 @@ Partial Class Form1
         Me.OpenFileDialog1 = New System.Windows.Forms.OpenFileDialog()
         Me.GTemas = New System.Windows.Forms.GroupBox()
         Me.dgv_Resultado = New System.Windows.Forms.DataGridView()
+        Me.Column1 = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.C_Titulo = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.C_Estado = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.C_Poliza = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.C_Cotizacion = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.C_Siniestro = New System.Windows.Forms.DataGridViewTextBoxColumn()
         Me.FolderBrowserDialog1 = New System.Windows.Forms.FolderBrowserDialog()
         Me.GBotonesTema = New System.Windows.Forms.GroupBox()
         Me.btnTemaNuevo = New System.Windows.Forms.Button()
@@ -80,12 +88,6 @@ Partial Class Form1
         Me.btnInstanciaEditar = New System.Windows.Forms.Button()
         Me.btnNuevaInstancia = New System.Windows.Forms.Button()
         Me.btnCarpetaBuscar = New System.Windows.Forms.Button()
-        Me.Column1 = New System.Windows.Forms.DataGridViewTextBoxColumn()
-        Me.C_Titulo = New System.Windows.Forms.DataGridViewTextBoxColumn()
-        Me.C_Estado = New System.Windows.Forms.DataGridViewTextBoxColumn()
-        Me.C_Poliza = New System.Windows.Forms.DataGridViewTextBoxColumn()
-        Me.C_Cotizacion = New System.Windows.Forms.DataGridViewTextBoxColumn()
-        Me.C_Siniestro = New System.Windows.Forms.DataGridViewTextBoxColumn()
         Me.GpoParticipantes.SuspendLayout()
         Me.MenuDatosParticipantes.SuspendLayout()
         Me.GComprobante.SuspendLayout()
@@ -398,6 +400,8 @@ Partial Class Form1
         'GMensaje
         '
         Me.GMensaje.BackColor = System.Drawing.Color.AntiqueWhite
+        Me.GMensaje.Controls.Add(Me.btnYo)
+        Me.GMensaje.Controls.Add(Me.btnUsuario)
         Me.GMensaje.Controls.Add(Me.List_Resultado)
         Me.GMensaje.Controls.Add(Me.rtxMensaje)
         Me.GMensaje.Location = New System.Drawing.Point(280, 78)
@@ -406,6 +410,24 @@ Partial Class Form1
         Me.GMensaje.TabIndex = 4
         Me.GMensaje.TabStop = False
         Me.GMensaje.Text = "Mensaje"
+        '
+        'btnYo
+        '
+        Me.btnYo.Location = New System.Drawing.Point(110, 347)
+        Me.btnYo.Name = "btnYo"
+        Me.btnYo.Size = New System.Drawing.Size(75, 23)
+        Me.btnYo.TabIndex = 3
+        Me.btnYo.Text = "YO"
+        Me.btnYo.UseVisualStyleBackColor = True
+        '
+        'btnUsuario
+        '
+        Me.btnUsuario.Location = New System.Drawing.Point(9, 347)
+        Me.btnUsuario.Name = "btnUsuario"
+        Me.btnUsuario.Size = New System.Drawing.Size(75, 23)
+        Me.btnUsuario.TabIndex = 2
+        Me.btnUsuario.Text = "Usuario"
+        Me.btnUsuario.UseVisualStyleBackColor = True
         '
         'List_Resultado
         '
@@ -419,11 +441,12 @@ Partial Class Form1
         '
         'rtxMensaje
         '
+        Me.rtxMensaje.AcceptsTab = True
         Me.rtxMensaje.Font = New System.Drawing.Font("Arial", 9.0!, System.Drawing.FontStyle.Italic, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.rtxMensaje.ForeColor = System.Drawing.SystemColors.MenuHighlight
+        Me.rtxMensaje.ForeColor = System.Drawing.Color.DarkViolet
         Me.rtxMensaje.Location = New System.Drawing.Point(9, 19)
         Me.rtxMensaje.Name = "rtxMensaje"
-        Me.rtxMensaje.Size = New System.Drawing.Size(687, 331)
+        Me.rtxMensaje.Size = New System.Drawing.Size(687, 263)
         Me.rtxMensaje.TabIndex = 0
         Me.rtxMensaje.Text = ""
         '
@@ -510,6 +533,38 @@ Partial Class Form1
         Me.dgv_Resultado.Name = "dgv_Resultado"
         Me.dgv_Resultado.Size = New System.Drawing.Size(687, 191)
         Me.dgv_Resultado.TabIndex = 0
+        '
+        'Column1
+        '
+        Me.Column1.HeaderText = "ID"
+        Me.Column1.Name = "Column1"
+        Me.Column1.Visible = False
+        '
+        'C_Titulo
+        '
+        Me.C_Titulo.HeaderText = "Titulo"
+        Me.C_Titulo.Name = "C_Titulo"
+        Me.C_Titulo.Width = 250
+        '
+        'C_Estado
+        '
+        Me.C_Estado.HeaderText = "Estado"
+        Me.C_Estado.Name = "C_Estado"
+        '
+        'C_Poliza
+        '
+        Me.C_Poliza.HeaderText = "Poliza"
+        Me.C_Poliza.Name = "C_Poliza"
+        '
+        'C_Cotizacion
+        '
+        Me.C_Cotizacion.HeaderText = "Cotizacion"
+        Me.C_Cotizacion.Name = "C_Cotizacion"
+        '
+        'C_Siniestro
+        '
+        Me.C_Siniestro.HeaderText = "Siniestro"
+        Me.C_Siniestro.Name = "C_Siniestro"
         '
         'GBotonesTema
         '
@@ -609,38 +664,6 @@ Partial Class Form1
         Me.btnCarpetaBuscar.Size = New System.Drawing.Size(76, 58)
         Me.btnCarpetaBuscar.TabIndex = 2
         Me.btnCarpetaBuscar.UseVisualStyleBackColor = True
-        '
-        'Column1
-        '
-        Me.Column1.HeaderText = "ID"
-        Me.Column1.Name = "Column1"
-        Me.Column1.Visible = False
-        '
-        'C_Titulo
-        '
-        Me.C_Titulo.HeaderText = "Titulo"
-        Me.C_Titulo.Name = "C_Titulo"
-        Me.C_Titulo.Width = 250
-        '
-        'C_Estado
-        '
-        Me.C_Estado.HeaderText = "Estado"
-        Me.C_Estado.Name = "C_Estado"
-        '
-        'C_Poliza
-        '
-        Me.C_Poliza.HeaderText = "Poliza"
-        Me.C_Poliza.Name = "C_Poliza"
-        '
-        'C_Cotizacion
-        '
-        Me.C_Cotizacion.HeaderText = "Cotizacion"
-        Me.C_Cotizacion.Name = "C_Cotizacion"
-        '
-        'C_Siniestro
-        '
-        Me.C_Siniestro.HeaderText = "Siniestro"
-        Me.C_Siniestro.Name = "C_Siniestro"
         '
         'Form1
         '
@@ -745,4 +768,6 @@ Partial Class Form1
     Friend WithEvents C_Poliza As DataGridViewTextBoxColumn
     Friend WithEvents C_Cotizacion As DataGridViewTextBoxColumn
     Friend WithEvents C_Siniestro As DataGridViewTextBoxColumn
+    Friend WithEvents btnYo As Button
+    Friend WithEvents btnUsuario As Button
 End Class

@@ -1,10 +1,13 @@
 ﻿Imports System.IO
 Public Class Form1
+    Public Usuario As String
+    Public Entrada As String
 
 
     Private Sub Form1_Load(sender As Object, e As EventArgs) Handles Me.Load
         Call Conectarse()
         Call Estado_Listar()
+        Call Temas_Buscar()
     End Sub
 
     Private Sub txProductor_KeyPress(sender As Object, e As KeyPressEventArgs) Handles txProductor.KeyPress
@@ -248,6 +251,9 @@ Public Class Form1
         dgv_Resultado.Rows.Clear()
         DGV_Instancias.Rows.Clear()
         TxPoliza.Select()
+        Usuario = Nothing
+        Entrada = Nothing
+        btnUsuario.Text = "Usuario"
 
     End Sub
 
@@ -350,6 +356,7 @@ Public Class Form1
 
     Private Sub btnTemaNuevo_Click(sender As Object, e As EventArgs) Handles btnTemaNuevo.Click
         Call TemaNuevo_Rutina()
+        Call Temas_Buscar()
     End Sub
 
     Private Sub BtnTemaAgregar_Click(sender As Object, e As EventArgs) Handles btnAgregarTema.Click
@@ -513,5 +520,57 @@ Public Class Form1
             txSiniestro.Text = Trim(txSiniestro.Text)
             Call Siniestro_Buscar_Existente()
         End If
+    End Sub
+
+    Private Sub btnUsuario_Click(sender As Object, e As EventArgs) Handles btnUsuario.Click
+        If Usuario = Nothing Then
+            Usuario = UCase(InputBox("Ingrese nombre del usuario", "INGRESAR NOMBRE"))
+            If Usuario = Nothing Then
+                Exit Sub
+            End If
+        End If
+
+        If Entrada = Usuario Then
+            rtxMensaje.Text = rtxMensaje.Text & Clipboard.GetText & Chr(10)
+        Else
+            If rtxMensaje.Text <> Nothing Then
+                rtxMensaje.Text = rtxMensaje.Text & Chr(10) & "--------------------------------" & Chr(10)
+            End If
+            rtxMensaje.Text = rtxMensaje.Text & Usuario & ":" & Chr(10) & Clipboard.GetText & Chr(10)
+        End If
+
+            Entrada = Usuario
+
+
+
+    End Sub
+
+    Private Sub btnYo_Click(sender As Object, e As EventArgs) Handles btnYo.Click
+        If Entrada = "YO" Then
+            rtxMensaje.Text = rtxMensaje.Text & Clipboard.GetText & Chr(10)
+        Else
+            If rtxMensaje.Text <> Nothing Then
+                rtxMensaje.Text = rtxMensaje.Text & Chr(10) & "--------------------------------" & Chr(10)
+            End If
+            rtxMensaje.Text = rtxMensaje.Text & "YO:" & Chr(10) & Clipboard.GetText & Chr(10)
+        End If
+
+        Entrada = "YO"
+
+
+    End Sub
+
+
+
+    Sub BuscarTexto()
+        Dim StartText As Integer = 0
+        Dim EndText As Integer
+
+        EndText = rtxMensaje.Text.LastIndexOf(Clipboard.GetText)
+
+        While StartText < EndText
+            rtxMensaje.Find(Clipboard.GetText, StartText, rtxMensaje.TextLength, RichTextBoxFinds.MatchCase)
+            ' StartText = rtxMensaje.Text.IndexOf(rtxMensaje.Text, StartText) + 1
+        End While
     End Sub
 End Class
