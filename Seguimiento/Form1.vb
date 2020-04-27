@@ -452,6 +452,7 @@ Public Class Form1
         IdInstancia = 0
         TxAsunto.Text = Nothing
         rtxMensaje.Text = Nothing
+        Call Temas_Buscar()
     End Sub
 
     Private Sub btnEditarTema_Click(sender As Object, e As EventArgs) Handles btnEditarTema.Click
@@ -539,9 +540,20 @@ Public Class Form1
             rtxMensaje.Text = rtxMensaje.Text & Usuario & ":" & Chr(10) & Clipboard.GetText & Chr(10)
         End If
 
-            Entrada = Usuario
+        Entrada = Usuario
+        Exit Sub
 
+        If IdInstancia = 0 Then
+            Call Instancia_Agregar()
+            Call IdInstancias_BuscarUltimo()
+            Call Tema_Editar()
+            Call Instancias_Buscar_DesdeTeam()
+        Else
+            Call Instancia_Editar()
+            Call Tema_Editar()
+        End If
 
+        rtxMensaje.SaveFile(RutaMensajes & CStr(IdInstancia) & ".rtf")
 
     End Sub
 
@@ -556,6 +568,20 @@ Public Class Form1
         End If
 
         Entrada = "YO"
+        Exit Sub
+
+        If IdInstancia = 0 Then
+            Call Instancia_Agregar()
+            Call IdInstancias_BuscarUltimo()
+            Call Tema_Editar()
+            Call Instancias_Buscar_DesdeTeam()
+        Else
+            Call Instancia_Editar()
+            Call Tema_Editar()
+        End If
+
+        rtxMensaje.SaveFile(RutaMensajes & CStr(IdInstancia) & ".rtf")
+
 
 
     End Sub

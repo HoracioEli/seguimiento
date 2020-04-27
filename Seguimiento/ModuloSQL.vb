@@ -725,7 +725,7 @@
         Grupo = Replace(Grupo, "'", " ")
 
 
-        SQL = "INSERT INTO Temas(Titulo,Poliza,Cotizacion,TareasPendientes,IdEstado,IdProductor,IdAsegurado,IdEmpleado,Grupo,Siniestro)"
+        SQL = "INSERT INTO Temas(Titulo,Poliza,Cotizacion,TareasPendientes,IdEstado,IdProductor,IdAsegurado,IdEmpleado,Grupo,Siniestro,FechaUltimaModificacion)"
         SQL = SQL & " Values ("
         SQL = SQL & "'" & Titulo & "',"
         SQL = SQL & "'" & Poliza & "',"
@@ -736,7 +736,8 @@
         SQL = SQL & IdAsegurado & ","
         SQL = SQL & IdEmpleado & ","
         SQL = SQL & "'" & Grupo & "',"
-        SQL = SQL & "'" & Siniestro & "'"
+        SQL = SQL & "'" & Siniestro & "',"
+        SQL = SQL & "'" & Now & "'"
         SQL = SQL & ")"
 
         Call IngresarEnAcces()
@@ -791,6 +792,7 @@
             ConsultaSQL += " WHERE Temas.IdTemas >0 "
 
 
+
             If Titulo <> Nothing Then
                 ConsultaSQL += " And Temas.Titulo Like '%" & Titulo & "%'"
             End If
@@ -839,7 +841,8 @@
                 ConsultaSQL += " and Instancias.Mensaje like '%" & Form1.rtxMensaje.Text & "%'"
             End If
 
-            ConsultaSQL += " ORDER BY Temas.IdTemas desc"
+            'ConsultaSQL += " ORDER BY Temas.IdTemas desc"
+            ConsultaSQL += " ORDER BY Temas.FechaUltimaModificacion DESC, Temas.IdTemas"
 
             Form1.dgv_Resultado.Rows.Clear()
             Call Consultar()
@@ -947,7 +950,8 @@
         SQL += "IdAsegurado=" & IdAsegurado & ","
         SQL += "IdEmpleado=" & IdEmpleado & ","
         SQL += "Grupo='" & Grupo & "',"
-        SQL += "Siniestro='" & Siniestro & "'"
+        SQL += "Siniestro='" & Siniestro & "',"
+        SQL += "FechaUltimaModificacion='" & Now & "'"
         SQL += " WHERE IdTemas=" & IdTema
 
         Call IngresarEnAcces()
@@ -1025,6 +1029,37 @@
         End Try
 
     End Sub
+
+
+    Sub Instancias_Buscar_DesdeTeam()
+        Try
+
+
+            ConsultaSQL = "SELECT IdInstancias, FechaInstancia"
+            ConsultaSQL += " FROM Instancias "
+            ConsultaSQL += " WHERE IdTemas= " & IdTema
+            ConsultaSQL += " ORDER BY FechaInstancia DESC"
+
+
+            Form1.DGV_Instancias.Rows.Clear()
+
+            Call Consultar()
+            If dr.HasRows Then
+                While dr.Read()
+                    IdInstancia = dr(0).ToString
+                    FechaInstancia = dr(1).ToString
+                    Form1.DGV_Instancias.Rows.Add(IdInstancia, FechaInstancia)
+                End While
+            End If
+
+            dr.Close()
+        Catch ex As Exception
+            dr.Close()
+            MsgBox(ex.Message)
+        End Try
+
+    End Sub
+
     Sub Instancia_Rutina()
         Call Instancia_Agregar()
         Call IdInstancias_BuscarUltimo()
